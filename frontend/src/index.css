@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/*
+  EduPath colour system
+  ---------------------
+  Change a value in :root and every component that uses the matching Tailwind
+  token (bg-surface, text-ink, text-on-primary, bg-footer, ...) updates.
+
+  --ep-surface     page background + header        #E8EDDF
+  --ep-ink         all interface text, and the dark button background
+  --ep-on-primary  text on buttons (and on the footer)
+  --ep-footer      footer background
+  --ep-error / --ep-success are functional-feedback colours only (validation,
+  alerts); they are not used for decoration.
+
+  Borders, hover states and panels are derived from these tokens with opacity
+  (e.g. border-ink/20, bg-ink/5), so no extra palette colours are introduced.
+*/
+:root {
+  --ep-surface: #E8EDDF;
+  --ep-ink: #1D2D44;
+  --ep-on-primary: #F1FAEE;
+  --ep-footer: #080C12;
+  --ep-error: #9B1C1C;
+  --ep-success: #1E6B3C;
+}
+
+@theme inline {
+  --color-surface: var(--ep-surface);
+  --color-ink: var(--ep-ink);
+  --color-on-primary: var(--ep-on-primary);
+  --color-footer: var(--ep-footer);
+  --color-danger: var(--ep-error);
+  --color-success: var(--ep-success);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: ui-serif, Georgia, "Times New Roman", serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--ep-surface);
+    color: var(--ep-ink);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--ep-surface);
+    color: var(--ep-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ep-ink);
+    outline-offset: 2px;
+  }
+
+  /* The footer is dark, so its focus ring must be light. */
+  footer :focus-visible {
+    outline-color: var(--ep-on-primary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
